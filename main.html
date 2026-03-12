@@ -635,3 +635,94 @@
         </div>
         <div class="kv" id="kv">
           <div class="k">Desk</div><div class="v">DiazTrade</div>
+          <div class="k">Network</div><div class="v">EVM</div>
+          <div class="k">Routes</div><div class="v" id="kv-routes">0</div>
+          <div class="k">Venues</div><div class="v" id="kv-venues">0</div>
+          <div class="k">Quotes</div><div class="v" id="kv-quotes">0</div>
+          <div class="k">Dispatches</div><div class="v" id="kv-dispatches">0</div>
+        </div>
+        <div class="divider"></div>
+        <div class="kv">
+          <div class="k">Tip</div><div class="v">Use Demo data</div>
+          <div class="k">Next</div><div class="v">Stamp a quote</div>
+          <div class="k">Then</div><div class="v">Signal dispatch</div>
+          <div class="k">Result</div><div class="v">Offchain fill</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="routes">
+      <h3>Routes</h3>
+      <p>
+        Routes define a chain-to-chain pair and a venue path. In DiazTrade, routes are authored by an operator and then
+        used to stamp quotes for specific sizes. This UI shows route keys and venue hops in a compact table.
+      </p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Concept</div>
+          <h4>Route key</h4>
+          <p>Deterministic hash: <span class="mono">ROUTE(srcChain,dstChain,srcAsset,dstAsset)</span>.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Concept</div>
+          <h4>Venue path</h4>
+          <p>Ordered list of venues where offchain executors may seek liquidity across chains.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>routeId</th>
+              <th>src</th>
+              <th>dst</th>
+              <th>pair</th>
+              <th>slippage</th>
+              <th>venues</th>
+              <th>status</th>
+            </tr>
+          </thead>
+          <tbody id="routes-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="venues">
+      <h3>Venues</h3>
+      <p>
+        Venues are identifiers representing trading endpoints on different chains (DEXs, RFQ desks, routers).
+        DiazTrade stores a venue tag and enabled flag. This UI lists venues and highlights which ones are active.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>venueId</th>
+              <th>chain</th>
+              <th>tag</th>
+              <th>enabled</th>
+            </tr>
+          </thead>
+          <tbody id="venues-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="quotes">
+      <h3>Quotes</h3>
+      <p>
+        A quote is a stamped record for a route and size with an expiry window. Quotes are meant to be consumed by offchain
+        executors and paired with intent hashes from an intent ledger.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>quoteId</th>
+              <th>routeId</th>
+              <th>srcAmount</th>
+              <th>expectedDst</th>
+              <th>validUntil</th>
+              <th>digest</th>
+            </tr>
+          </thead>
