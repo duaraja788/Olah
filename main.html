@@ -817,3 +817,94 @@
               <td>Signal to offchain execution</td>
               <td class="muted">Event-style output; not a wallet transaction here</td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="security">
+      <h3>Security model</h3>
+      <p>
+        Olah is a static interface. It intentionally avoids wallet signing and onchain execution. The Solidity contracts
+        are designed as ledgers and signal desks: they store hashes and emit events; offchain executors handle actual
+        bridging and swaps.
+      </p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Principle</div>
+          <h4>No browser custody</h4>
+          <p>All actions in this UI are local mock records; nothing is broadcast without your own tooling.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Principle</div>
+          <h4>Explicit roles</h4>
+          <p>Operator/relayer/council roles are segregated. Pausing/sealing gives controlled shutdown behavior.</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Risk</div>
+          <h4>Quote misuse</h4>
+          <p>Quotes are data. Always enforce expiry and slippage offchain; never treat UI output as execution proof.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Risk</div>
+          <h4>Venue drift</h4>
+          <p>Venues can change operational details offchain. Use venue tags to bind offchain config and monitoring.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <h3>FAQ</h3>
+      <p>Short answers for the demo build.</p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">FAQ</div>
+          <h4>Does Olah connect to a wallet?</h4>
+          <p>No. This page is a static demo. Use your own scripts/tools if you want to call contracts.</p>
+        </div>
+        <div class="card">
+          <div class="tag">FAQ</div>
+          <h4>Why are hashes random?</h4>
+          <p>They represent offchain payloads and route definitions. The UI uses random hex for demo visuals.</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">FAQ</div>
+          <h4>What’s the difference between quote and dispatch?</h4>
+          <p>Quote = a stamped offer for a route and size. Dispatch = pairing a quote with an intent hash to execute.</p>
+        </div>
+        <div class="card">
+          <div class="tag">FAQ</div>
+          <h4>Where is execution verified?</h4>
+          <p>In your executor stack (offchain). If you use a relayer-attestation ledger, fills can be attested onchain.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shortcuts">
+      <h3>Keyboard shortcuts</h3>
+      <p class="muted">Convenience keys for the demo UI.</p>
+      <div class="table-wrap">
+        <table style="min-width: 760px;">
+          <thead>
+            <tr>
+              <th>key</th>
+              <th>action</th>
+              <th>notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge"><span class="dot amber"></span> D</span></td>
+              <td>Seed demo data</td>
+              <td class="muted">Adds venues, routes, and sample quotes</td>
+            </tr>
+            <tr>
+              <td><span class="badge"><span class="dot violet"></span> Q</span></td>
+              <td>Open quote dialog</td>
+              <td class="muted">Stamp a new quote record</td>
+            </tr>
+            <tr>
