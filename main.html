@@ -999,3 +999,94 @@
           <div class="tag">Step</div>
           <h4>Signal dispatch</h4>
           <p>Press <span class="mono">S</span>, pick a quote, and paste an intent hash. The activity feed records dispatch.</p>
+          <div class="divider"></div>
+          <p class="muted">Goal: dispatch count increments and a new log line appears.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Reset</div>
+          <h4>Clear</h4>
+          <p>Press <span class="mono">C</span> to clear the activity feed and reset dispatch count for the demo session.</p>
+          <div class="divider"></div>
+          <p class="muted">Goal: dispatch count returns to 0.</p>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:1rem;">
+        <table style="min-width: 920px;">
+          <thead>
+            <tr>
+              <th>version</th>
+              <th>change</th>
+              <th>impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0.1</td><td>Base dashboard</td><td class="muted">Routes, venues, quotes tables</td></tr>
+            <tr><td>0.2</td><td>Quote stamping modal</td><td class="muted">Adds UX flow for quotes</td></tr>
+            <tr><td>0.3</td><td>Dispatch modal + log</td><td class="muted">Pairs quote with intent hash</td></tr>
+            <tr><td>0.4</td><td>Keyboard shortcuts</td><td class="muted">D/Q/S/C/Esc actions</td></tr>
+            <tr><td>0.5</td><td>Security and glossary</td><td class="muted">Explains data model</td></tr>
+            <tr><td>0.6</td><td>Diagnostics + runbook</td><td class="muted">Quick demo checks</td></tr>
+            <tr><td>0.7</td><td>Contracts panel</td><td class="muted">Maps UI sections to Solidity artifacts</td></tr>
+            <tr><td>0.8</td><td>Dispatch readiness</td><td class="muted">Adds simple diag counters</td></tr>
+            <tr><td>0.9</td><td>Glossary terms</td><td class="muted">Clarifies intent/route/quote/dispatch vocabulary</td></tr>
+            <tr><td>1.0</td><td>Signals note</td><td class="muted">Clarifies the stack’s event-driven execution model</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid2" style="margin-top:1rem;">
+        <div class="card">
+          <div class="tag">Signals</div>
+          <h4>Event-driven execution</h4>
+          <p>
+            A stamped quote is data; a dispatch is a signal. Offchain executors and relayers coordinate fills and (optionally)
+            attest outcomes to an intent ledger. This UI is intentionally read-only and local.
+          </p>
+          <div class="divider"></div>
+          <p class="muted mono">Hint: Use the activity feed as an event timeline during demos.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Signals</div>
+          <h4>What to verify</h4>
+          <p>
+            Always verify: expiry windows, venue enablement, route retirement status, and slippage constraints. Treat hashes as
+            identifiers, not proof of execution.
+          </p>
+          <div class="divider"></div>
+          <p class="muted mono">Hint: If a venue is disabled, retire the route or update the venue path.</p>
+          <p class="muted">Olah keeps it simple: plan, quote, dispatch.</p>
+          <p class="muted mono">Status: demo-ready.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Olah UI — cross-chain trade desk mock. No wallet hooks in this static build.</div>
+      <div class="links">
+        <a href="#home">home</a>
+        <a href="#routes">routes</a>
+        <a href="#venues">venues</a>
+        <a href="#quotes">quotes</a>
+        <a href="#dispatch">dispatch</a>
+      </div>
+    </footer>
+  </main>
+
+  <div class="modal" id="modal-quote">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h3 style="font-size:1.1rem;">Stamp a quote</h3>
+          <div class="sub">Create a new quote record for a route</div>
+        </div>
+        <button class="xbtn" id="x-quote">close</button>
+      </div>
+      <div class="form">
+        <div>
+          <label>Route</label>
+          <select id="q-route"></select>
+        </div>
+        <div>
+          <label>Valid until (block)</label>
+          <input id="q-until" type="number" value="25000" />
+        </div>
+        <div>
