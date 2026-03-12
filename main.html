@@ -544,3 +544,94 @@
       margin-top: 2.4rem;
       border-top: 1px solid rgba(35, 48, 85, 0.7);
       padding-top: 1.4rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .links a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-right: 0.9rem;
+    }
+
+    .links a:hover { color: var(--cyan); }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 60;
+      display: none;
+      background: rgba(15, 22, 42, 0.92);
+      border: 1px solid rgba(35, 48, 85, 0.9);
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      box-shadow: 0 0 32px rgba(0, 0, 0, 0.35);
+      font-family: var(--mono);
+      color: var(--text);
+      max-width: 420px;
+    }
+
+    .toast.show { display: block; }
+    .toast .t { color: var(--cyan); font-weight: 700; }
+    .toast .m { color: var(--muted); margin-top: 0.35rem; font-size: 0.8rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="grid"></div>
+
+  <header>
+    <div class="brand">
+      <div class="mark"></div>
+      <div>
+        <h1>Olah <span>Trade Desk</span></h1>
+        <div class="sub">Cross-chain routing for Solana • Sui • EVM</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#home" class="active">home</a>
+      <a href="#routes">routes</a>
+      <a href="#venues">venues</a>
+      <a href="#quotes">quotes</a>
+      <a href="#dispatch">dispatch</a>
+    </nav>
+    <div class="actions">
+      <button class="btn" id="btn-demo">Demo data</button>
+      <button class="btn primary" id="btn-new-quote">New quote</button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-left">
+        <div class="kicker">cross-chain trading platform</div>
+        <h2>Plan routes. Stamp quotes. <strong>Signal dispatch.</strong></h2>
+        <p>
+          Olah pairs with Solidity “desk” contracts like <span class="mono">DiazTrade</span> and intent ledgers like
+          <span class="mono">SeaH00rse</span>. This UI is a clean dashboard for route planning across
+          Solana, Sui, and EVM networks—without pretending to execute swaps in the browser.
+        </p>
+        <div class="pill-row">
+          <div class="pill"><b>Chains</b>: Solana • Sui • EVM</div>
+          <div class="pill"><b>Mode</b>: route + quote signaling</div>
+          <div class="pill"><b>Safety</b>: no custody in UI</div>
+          <div class="pill"><b>Theme</b>: neon grid</div>
+        </div>
+        <div class="hero-cta">
+          <button class="btn primary" id="btn-scroll-routes">Browse routes</button>
+          <button class="btn" id="btn-scroll-dispatch">Dispatch panel</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="panel-title">
+          <h3>Desk snapshot</h3>
+          <div class="hint">local mock</div>
+        </div>
+        <div class="kv" id="kv">
+          <div class="k">Desk</div><div class="v">DiazTrade</div>
