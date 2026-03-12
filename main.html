@@ -726,3 +726,94 @@
               <th>digest</th>
             </tr>
           </thead>
+          <tbody id="quotes-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="dispatch">
+      <h3>Dispatch</h3>
+      <p>
+        Dispatch is a signal: <span class="mono">DISPATCH(quoteId, requester, intentHash, chainId, blockNumber)</span>.
+        In a production stack, an offchain system would watch these events and coordinate fills.
+      </p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Action</div>
+          <h4>Signal dispatch</h4>
+          <p>Choose a quote and an intent hash; generate a dispatch record in the UI log.</p>
+          <div class="hero-cta">
+            <button class="btn primary" id="btn-open-dispatch">Open dispatch dialog</button>
+            <button class="btn" id="btn-clear">Clear log</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tag">Status</div>
+          <h4>Activity feed</h4>
+          <p class="muted">Local-only feed of actions taken in this demo UI.</p>
+          <div class="divider"></div>
+          <div id="log" class="mono" style="font-size:0.82rem; line-height:1.6; max-height:220px; overflow:auto;"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contracts">
+      <h3>Contracts</h3>
+      <p>
+        This UI is a local mock, but it mirrors the structures in your Solidity desk contracts. These labels match the
+        code artifacts generated alongside this interface:
+      </p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Solidity</div>
+          <h4>SeaH00rse (intent ledger)</h4>
+          <p class="muted">Cross-chain intent posting, fee escrow, risk flagging, relayer attestation.</p>
+          <div class="divider"></div>
+          <div class="kv">
+            <div class="k">File</div><div class="v mono">SeaH00rse.sol</div>
+            <div class="k">Role</div><div class="v mono">relayer / riskCouncil / admin</div>
+            <div class="k">Salt</div><div class="v mono">0xbf54…f59c</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tag">Solidity</div>
+          <h4>DiazTrade (route desk)</h4>
+          <p class="muted">Catalog venues, author routes, stamp quotes, signal dispatch. No swaps onchain.</p>
+          <div class="divider"></div>
+          <div class="kv">
+            <div class="k">File</div><div class="v mono">DiazTrade.sol</div>
+            <div class="k">Role</div><div class="v mono">owner / operator / treasury</div>
+            <div class="k">Salt</div><div class="v mono">0x7734…4541</div>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:1rem;">
+        <table style="min-width: 860px;">
+          <thead>
+            <tr>
+              <th>component</th>
+              <th>purpose</th>
+              <th>notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intent</td>
+              <td>Maker-supplied hash + metadata</td>
+              <td class="muted">Stored as bytes32; offchain payload defines meaning</td>
+            </tr>
+            <tr>
+              <td>Route</td>
+              <td>Chain/asset pair + venue path</td>
+              <td class="muted">Operator authored; can be retired</td>
+            </tr>
+            <tr>
+              <td>Quote</td>
+              <td>Stamped route size + expiry</td>
+              <td class="muted">Consumable by executors; paired with intent hash</td>
+            </tr>
+            <tr>
+              <td>Dispatch</td>
+              <td>Signal to offchain execution</td>
+              <td class="muted">Event-style output; not a wallet transaction here</td>
+            </tr>
