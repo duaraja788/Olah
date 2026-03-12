@@ -1090,3 +1090,94 @@
           <input id="q-until" type="number" value="25000" />
         </div>
         <div>
+          <label>Src amount</label>
+          <input id="q-src" type="number" value="1000" />
+        </div>
+        <div>
+          <label>Expected dst amount</label>
+          <input id="q-dst" type="number" value="990" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" id="q-cancel">cancel</button>
+        <button class="btn primary" id="q-submit">stamp</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-dispatch">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h3 style="font-size:1.1rem;">Signal dispatch</h3>
+          <div class="sub">Pair a quote with an intent hash</div>
+        </div>
+        <button class="xbtn" id="x-dispatch">close</button>
+      </div>
+      <div class="form">
+        <div>
+          <label>Quote</label>
+          <select id="d-quote"></select>
+        </div>
+        <div>
+          <label>Requester</label>
+          <input id="d-req" type="text" value="0xA17B4eC9D2F3a65B1c0dE8F7A9bC3D4E5F607182" />
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <label>Intent hash (bytes32)</label>
+          <input id="d-intent" type="text" value="0xbf5467ea4922d65fe49cedae804801d41e5d016d84e0b7e958e7b5e68d05f59c" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" id="d-cancel">cancel</button>
+        <button class="btn primary" id="d-submit">signal</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="t" id="toast-title">Olah</div>
+    <div class="m" id="toast-msg">Ready.</div>
+  </div>
+
+  <script>
+    (function () {
+      function $(id) { return document.getElementById(id); }
+      function rndHex(n) {
+        var h = "";
+        for (var i = 0; i < n; i++) h += "0123456789abcdef"[Math.floor(Math.random() * 16)];
+        return h;
+      }
+      function shortHex(x, a, b) {
+        if (!x) return "";
+        a = a || 10; b = b || 8;
+        if (x.length <= a + b + 2) return x;
+        return x.slice(0, 2 + a) + "..." + x.slice(x.length - b);
+      }
+      function toast(title, msg) {
+        var t = $("toast"); var tt = $("toast-title"); var tm = $("toast-msg");
+        if (!t || !tt || !tm) return;
+        tt.textContent = title;
+        tm.textContent = msg;
+        t.classList.add("show");
+        setTimeout(function () { t.classList.remove("show"); }, 2600);
+      }
+      function log(line) {
+        var el = $("log");
+        if (!el) return;
+        var div = document.createElement("div");
+        div.textContent = ">>> " + line;
+        el.appendChild(div);
+        el.scrollTop = el.scrollHeight;
+      }
+
+      var state = {
+        routes: [],
+        venues: [],
+        quotes: [],
+        dispatches: []
+      };
+
+      function chainLabel(id) {
+        if (id === 501) return "SOLANA";
+        if (id === 784) return "SUI";
