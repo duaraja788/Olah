@@ -1272,3 +1272,94 @@
             '<td>' + shortHex(q.quoteId, 14, 10) + '</td>' +
             '<td>' + q.routeId + '</td>' +
             '<td>' + q.srcAmount + '</td>' +
+            '<td>' + q.expectedDst + '</td>' +
+            '<td>' + q.validUntil + '</td>' +
+            '<td>' + shortHex(q.digest, 14, 10) + '</td>' +
+          '</tr>';
+        }).join("");
+      }
+
+      function refreshSnapshot() {
+        $("kv-routes").textContent = String(state.routes.length);
+        $("kv-venues").textContent = String(state.venues.length);
+        $("kv-quotes").textContent = String(state.quotes.length);
+        $("kv-dispatches").textContent = String(state.dispatches.length);
+        var dr = $("diag-routes");
+        var dd = $("diag-dispatch");
+        if (dr) dr.textContent = "routes=" + state.routes.length + " venues=" + state.venues.length + " quotes=" + state.quotes.length;
+        if (dd) dd.textContent = "quotes=" + state.quotes.length + " dispatches=" + state.dispatches.length;
+      }
+
+      function refreshSelects() {
+        var selRoute = $("q-route");
+        if (selRoute) {
+          selRoute.innerHTML = state.routes.map(function (r) {
+            return '<option value="' + r.routeId + '">Route #' + r.routeId + ' — ' + chainLabel(r.src) + ' → ' + chainLabel(r.dst) + ' — ' + r.pair + '</option>';
+          }).join("");
+        }
+        var selQuote = $("d-quote");
+        if (selQuote) {
+          selQuote.innerHTML = state.quotes.map(function (q, i) {
+            return '<option value="' + q.quoteId + '">Quote ' + (i + 1) + ' — route ' + q.routeId + ' — until ' + q.validUntil + '</option>';
+          }).join("");
+        }
+      }
+
+      function openModal(id) { var m = $(id); if (m) m.classList.add("show"); }
+      function closeModal(id) { var m = $(id); if (m) m.classList.remove("show"); }
+
+      function seedDemo() {
+        state.venues = [
+          mkVenue(501, "0x" + rndHex(64)),
+          mkVenue(784, "0x" + rndHex(64)),
+          mkVenue(1, "0x" + rndHex(64)),
+          mkVenue(1, "0x" + rndHex(64))
+        ];
+        state.routes = [
+          mkRoute(1, 501, 1, "SOL/USDC", 45, [state.venues[0].venueId, state.venues[2].venueId]),
+          mkRoute(2, 784, 1, "SUI/USDC", 55, [state.venues[1].venueId, state.venues[3].venueId]),
+          mkRoute(3, 1, 501, "ETH/SOL", 70, [state.venues[2].venueId, state.venues[0].venueId])
+        ];
+        state.quotes = [
+          mkQuote(1, 1000, 996, 25000),
+          mkQuote(2, 2500, 2470, 25250)
+        ];
+        state.dispatches = [];
+        renderRoutes();
+        renderVenues();
+        renderQuotes();
+        refreshSnapshot();
+        refreshSelects();
+        log("demo seeded: routes=" + state.routes.length + " venues=" + state.venues.length + " quotes=" + state.quotes.length);
+        toast("Olah", "Demo data loaded.");
+      }
+
+      function addQuote() {
+        if (state.routes.length === 0) {
+          toast("Olah", "No routes. Load demo data first.");
+          return;
+        }
+        openModal("modal-quote");
+      }
+
+      function submitQuote() {
+        var rid = parseInt($("q-route").value, 10);
+        var untilB = parseInt($("q-until").value, 10);
+        var srcA = parseInt($("q-src").value, 10);
+        var dstA = parseInt($("q-dst").value, 10);
+        if (!rid || !untilB || !srcA || !dstA) {
+          toast("Olah", "Invalid quote fields.");
+          return;
+        }
+        var q = mkQuote(rid, srcA, dstA, untilB);
+        state.quotes.unshift(q);
+        renderQuotes();
+        refreshSnapshot();
+        refreshSelects();
+        closeModal("modal-quote");
+        log("quote stamped: quoteId=" + shortHex(q.quoteId, 10, 8) + " routeId=" + q.routeId + " until=" + q.validUntil);
+        toast("Quote", "Stamped new quote.");
+      }
+
+      function openDispatch() {
+        if (state.quotes.length === 0) {
