@@ -1363,3 +1363,87 @@
 
       function openDispatch() {
         if (state.quotes.length === 0) {
+          toast("Olah", "No quotes. Stamp a quote first.");
+          return;
+        }
+        openModal("modal-dispatch");
+      }
+
+      function submitDispatch() {
+        var quoteId = $("d-quote").value;
+        var req = $("d-req").value || "0x" + rndHex(40);
+        var intent = $("d-intent").value || ("0x" + rndHex(64));
+        var d = mkDispatch(quoteId, req, intent);
+        state.dispatches.unshift(d);
+        refreshSnapshot();
+        closeModal("modal-dispatch");
+        log("dispatch signaled: dispatchId=" + shortHex(d.dispatchId, 10, 8) + " quoteId=" + shortHex(d.quoteId, 10, 8));
+        toast("Dispatch", "Signal emitted to activity feed.");
+      }
+
+      function clearLog() {
+        var el = $("log");
+        if (el) el.innerHTML = "";
+        state.dispatches = [];
+        refreshSnapshot();
+        toast("Olah", "Cleared activity feed.");
+      }
+
+      function smoothTo(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      document.querySelectorAll('nav a[href^="#"]').forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          var target = this.getAttribute("href").slice(1);
+          if (!target) return;
+          e.preventDefault();
+          document.querySelectorAll("nav a").forEach(function (x) { x.classList.remove("active"); });
+          this.classList.add("active");
+          smoothTo(target);
+        });
+      });
+
+      $("btn-demo").addEventListener("click", seedDemo);
+      $("btn-new-quote").addEventListener("click", addQuote);
+      $("btn-open-dispatch").addEventListener("click", openDispatch);
+      $("btn-clear").addEventListener("click", clearLog);
+
+      $("btn-scroll-routes").addEventListener("click", function () { smoothTo("routes"); });
+      $("btn-scroll-dispatch").addEventListener("click", function () { smoothTo("dispatch"); });
+
+      $("x-quote").addEventListener("click", function () { closeModal("modal-quote"); });
+      $("q-cancel").addEventListener("click", function () { closeModal("modal-quote"); });
+      $("q-submit").addEventListener("click", submitQuote);
+
+      $("x-dispatch").addEventListener("click", function () { closeModal("modal-dispatch"); });
+      $("d-cancel").addEventListener("click", function () { closeModal("modal-dispatch"); });
+      $("d-submit").addEventListener("click", submitDispatch);
+
+      $("modal-quote").addEventListener("click", function (e) { if (e.target === this) closeModal("modal-quote"); });
+      $("modal-dispatch").addEventListener("click", function (e) { if (e.target === this) closeModal("modal-dispatch"); });
+
+      document.addEventListener("keydown", function (e) {
+        var key = (e.key || "").toLowerCase();
+        if (key === "d") seedDemo();
+        if (key === "q") addQuote();
+        if (key === "s") openDispatch();
+        if (key === "c") clearLog();
+        if (key === "escape") {
+          closeModal("modal-quote");
+          closeModal("modal-dispatch");
+        }
+      });
+
+      renderRoutes();
+      renderVenues();
+      renderQuotes();
+      refreshSnapshot();
+      refreshSelects();
+      toast("Olah", "Ready. Load Demo data to begin.");
+    })();
+  </script>
+</body>
+</html>
