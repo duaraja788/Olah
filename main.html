@@ -1181,3 +1181,94 @@
       function chainLabel(id) {
         if (id === 501) return "SOLANA";
         if (id === 784) return "SUI";
+        if (id === 1) return "EVM";
+        return "CHAIN_" + id;
+      }
+
+      function mkVenue(chainId, tag) {
+        var id = "0x" + rndHex(64);
+        return {
+          venueId: id,
+          chainId: chainId,
+          tag: tag,
+          enabled: true
+        };
+      }
+
+      function mkRoute(routeId, src, dst, pair, slip, venueIds) {
+        return {
+          routeId: routeId,
+          src: src,
+          dst: dst,
+          pair: pair,
+          slippage: slip,
+          venues: venueIds.slice(),
+          status: "active",
+          routeKey: "0x" + rndHex(64)
+        };
+      }
+
+      function mkQuote(routeId, srcAmount, dstAmount, untilBlock) {
+        return {
+          quoteId: "0x" + rndHex(64),
+          routeId: routeId,
+          srcAmount: srcAmount,
+          expectedDst: dstAmount,
+          validUntil: untilBlock,
+          digest: "0x" + rndHex(64)
+        };
+      }
+
+      function mkDispatch(quoteId, requester, intentHash) {
+        return {
+          dispatchId: "0x" + rndHex(64),
+          quoteId: quoteId,
+          requester: requester,
+          intentHash: intentHash,
+          atBlock: 20000 + Math.floor(Math.random() * 4000)
+        };
+      }
+
+      function renderRoutes() {
+        var tb = $("routes-tbody");
+        if (!tb) return;
+        tb.innerHTML = state.routes.map(function (r) {
+          var dots = '<span class="badge"><span class="dot"></span>' + chainLabel(r.src) + '</span>' +
+                     '<span class="badge"><span class="dot violet"></span>' + chainLabel(r.dst) + '</span>';
+          var venues = r.venues.map(function (v) { return shortHex(v, 8, 6); }).join(" • ");
+          var statDot = r.status === "active" ? "dot" : (r.status === "retired" ? "dot red" : "dot amber");
+          var stat = '<span class="badge"><span class="' + statDot + '"></span>' + r.status + '</span>';
+          return '<tr>' +
+            '<td>' + r.routeId + '</td>' +
+            '<td>' + dots + '</td>' +
+            '<td>' + '<span class="badge"><span class="dot violet"></span>' + chainLabel(r.dst) + '</span>' + '</td>' +
+            '<td>' + r.pair + '</td>' +
+            '<td>' + r.slippage + ' bps</td>' +
+            '<td>' + venues + '</td>' +
+            '<td>' + stat + '</td>' +
+          '</tr>';
+        }).join("");
+      }
+
+      function renderVenues() {
+        var tb = $("venues-tbody");
+        if (!tb) return;
+        tb.innerHTML = state.venues.map(function (v) {
+          var dot = v.enabled ? "dot" : "dot red";
+          return '<tr>' +
+            '<td>' + shortHex(v.venueId, 14, 10) + '</td>' +
+            '<td>' + '<span class="badge"><span class="' + dot + '"></span>' + chainLabel(v.chainId) + '</span>' + '</td>' +
+            '<td>' + shortHex(v.tag, 10, 10) + '</td>' +
+            '<td>' + (v.enabled ? "true" : "false") + '</td>' +
+          '</tr>';
+        }).join("");
+      }
+
+      function renderQuotes() {
+        var tb = $("quotes-tbody");
+        if (!tb) return;
+        tb.innerHTML = state.quotes.map(function (q) {
+          return '<tr>' +
+            '<td>' + shortHex(q.quoteId, 14, 10) + '</td>' +
+            '<td>' + q.routeId + '</td>' +
+            '<td>' + q.srcAmount + '</td>' +
