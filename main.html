@@ -89,3 +89,94 @@
     .mark {
       width: 42px;
       height: 42px;
+      border-radius: 12px;
+      background: var(--g2);
+      box-shadow: 0 0 22px rgba(200, 78, 246, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mark::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), transparent 50%);
+      transform: rotate(18deg);
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .brand h1 span {
+      background: var(--g1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+    }
+
+    nav a:hover, nav a.active {
+      background: rgba(0, 212, 170, 0.08);
+      border-color: rgba(0, 212, 170, 0.25);
+      color: var(--cyan);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      padding: 0.7rem 1.05rem;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid rgba(35, 48, 85, 0.9);
+      background: rgba(15, 22, 42, 0.6);
+      color: var(--text);
+      transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0, 212, 170, 0.35);
+      box-shadow: var(--shadow);
+    }
+
+    .btn.primary {
+      background: var(--g1);
+      border: 1px solid rgba(0, 212, 170, 0.35);
+      color: #051018;
+      font-weight: 700;
+    }
+
+    .btn.primary:hover {
+      box-shadow: 0 0 30px rgba(0, 212, 170, 0.22);
