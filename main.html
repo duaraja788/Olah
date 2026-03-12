@@ -908,3 +908,94 @@
               <td class="muted">Stamp a new quote record</td>
             </tr>
             <tr>
+              <td><span class="badge"><span class="dot"></span> S</span></td>
+              <td>Open dispatch dialog</td>
+              <td class="muted">Signal dispatch using a quote + intent hash</td>
+            </tr>
+            <tr>
+              <td><span class="badge"><span class="dot red"></span> C</span></td>
+              <td>Clear activity feed</td>
+              <td class="muted">Resets dispatch count</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="glossary">
+      <h3>Glossary</h3>
+      <p class="muted">A compact vocabulary for cross-chain routing.</p>
+      <div class="table-wrap">
+        <table style="min-width: 900px;">
+          <thead>
+            <tr>
+              <th>term</th>
+              <th>meaning</th>
+              <th>in this stack</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Intent</td><td>Maker intent to trade</td><td class="muted">Recorded as bytes32 + metadata in intent ledger</td></tr>
+            <tr><td>Venue</td><td>Endpoint for liquidity</td><td class="muted">Catalog entry with chainId + tag + enabled flag</td></tr>
+            <tr><td>Route</td><td>Candidate execution path</td><td class="muted">Pair + venue path authored by operator</td></tr>
+            <tr><td>Quote</td><td>Stamped expected output</td><td class="muted">Bound to route and size with validity window</td></tr>
+            <tr><td>Dispatch</td><td>Signal to execute</td><td class="muted">Pairs quoteId with intentHash + requester</td></tr>
+            <tr><td>Relayer</td><td>Attests fills</td><td class="muted">Posts fill hash and fee usage to ledger</td></tr>
+            <tr><td>Risk council</td><td>Flags suspicious intents</td><td class="muted">Toggles flagged state prior to fill</td></tr>
+            <tr><td>Slippage (bps)</td><td>Allowed deviation</td><td class="muted">Used offchain to enforce min-out / max-in</td></tr>
+            <tr><td>Expiry</td><td>Deadline block</td><td class="muted">Quotes and intents should not be used past expiry</td></tr>
+            <tr><td>Digest</td><td>Compact verification hash</td><td class="muted">Computed to bind fields for indexers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="diagnostics">
+      <h3>Diagnostics</h3>
+      <p class="muted">Local-only checks to keep the demo consistent.</p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Check</div>
+          <h4>Route coverage</h4>
+          <p id="diag-routes" class="mono muted">No data loaded.</p>
+          <div class="divider"></div>
+          <div class="pill-row">
+            <div class="pill"><b>Goal</b>: at least 1 route</div>
+            <div class="pill"><b>Goal</b>: at least 1 venue</div>
+            <div class="pill"><b>Goal</b>: at least 1 quote</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tag">Check</div>
+          <h4>Dispatch readiness</h4>
+          <p id="diag-dispatch" class="mono muted">No data loaded.</p>
+          <div class="divider"></div>
+          <p class="muted">Tip: Press <span class="mono">D</span> for demo seed, then <span class="mono">Q</span> and <span class="mono">S</span>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="runbook">
+      <h3>Runbook</h3>
+      <p class="muted">A simple flow to follow when demoing the desk.</p>
+      <div class="grid2">
+        <div class="card">
+          <div class="tag">Step</div>
+          <h4>Seed the desk</h4>
+          <p>Press <span class="mono">D</span> or click <span class="mono">Demo data</span>. This creates venues, routes, and quotes.</p>
+          <div class="divider"></div>
+          <p class="muted">Goal: the snapshot panel shows non-zero counts.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Step</div>
+          <h4>Stamp a quote</h4>
+          <p>Press <span class="mono">Q</span> to create a quote for a selected route. Adjust size and validity block.</p>
+          <div class="divider"></div>
+          <p class="muted">Goal: a new quote appears at the top of the Quotes table.</p>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:1rem;">
+        <div class="card">
+          <div class="tag">Step</div>
+          <h4>Signal dispatch</h4>
+          <p>Press <span class="mono">S</span>, pick a quote, and paste an intent hash. The activity feed records dispatch.</p>
