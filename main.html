@@ -453,3 +453,94 @@
 
     .mono { font-family: var(--mono); }
     .muted { color: var(--muted); }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 50;
+      padding: 1.2rem;
+    }
+
+    .modal.show { display: flex; }
+
+    .modal-card {
+      width: min(720px, 100%);
+      background: rgba(15, 22, 42, 0.92);
+      border: 1px solid rgba(35, 48, 85, 0.9);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: 0 0 44px rgba(0, 0, 0, 0.35);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .xbtn {
+      border: 1px solid rgba(35, 48, 85, 0.9);
+      background: rgba(7, 10, 18, 0.4);
+      color: var(--text);
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 0.55rem 0.8rem;
+      font-family: var(--mono);
+    }
+
+    .form {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .form { grid-template-columns: 1fr; }
+      table { min-width: 720px; }
+    }
+
+    label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(35, 48, 85, 0.9);
+      background: rgba(7, 10, 18, 0.5);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(0, 212, 170, 0.4);
+      box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.10);
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.6rem;
+      margin-top: 0.9rem;
+    }
+
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(35, 48, 85, 0.7);
+      padding-top: 1.4rem;
